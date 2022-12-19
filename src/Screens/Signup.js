@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { createAuthUserWithEmailAndPassword } from "../firebase";
+import { createAuthUserWithEmailAndPassword,auth } from "../firebase";
+import { updateProfile } from "firebase/auth";
 import { toast } from "react-toastify";
 
 export default function Signup() {
@@ -9,20 +10,33 @@ export default function Signup() {
     e.preventDefault();
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
+    const FirstName = document.getElementById("FirstName").value;
+    const LastName = document.getElementById("LastName").value;
+
     if (!email) {
       toast.error("Email is required");
+      return;
+    }
+    else if (!FirstName) {
+      toast.error("First Name is required");
+      return;
+    }
+    else if (!LastName) {
+      toast.error("Last Name is required");
       return;
     }
     else if (password.length < 6) {
       toast.error("Password must be at least 6 characters long");
       return;
     }
-
     try {
       createAuthUserWithEmailAndPassword(email, password)
         .then((response) => {
           // sessionStorage.setItem('Auth Token', response._tokenResponse.refreshToken)
           if (response) {
+            updateProfile(auth.currentUser, {
+              displayName: FirstName + " " + LastName,
+            });
             navigate("/SignIn");
             toast.success("User Created Successfully");
             return;
@@ -71,14 +85,14 @@ export default function Signup() {
                 <div className="flex flex-row gap-4 justify-center items-center xxs:w-[16rem] xs:w-[18rem] sm:w-[22rem] md:w-[26rem] lg:w-[30rem]">
                   <input
                     type="text"
-                    id="username"
+                    id="FirstName"
                     placeholder="FirstName"
                     required
                     className="border-[1px] border-black rounded-[5px] w-full h-12 p-2"
                   />
                   <input
                     type="text"
-                    id="username1"
+                    id="LastName"
                     placeholder="LastName"
                     required
                     className="border-[1px] border-black rounded-[5px] w-full h-12 p-2"

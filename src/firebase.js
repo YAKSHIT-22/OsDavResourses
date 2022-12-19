@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { initializeApp } from "firebase/app";
 import {
   getAuth,
@@ -12,13 +13,13 @@ import {
 
 import {
   getFirestore,
-  doc,
-  getDoc,
-  setDoc,
-  collection,
-  writeBatch,
-  query,
-  getDocs,
+  //   doc,
+  //   getDoc,
+  //   setDoc,
+  //   collection,
+  //   writeBatch,
+  //   query,
+  //   getDocs,
 } from "firebase/firestore";
 
 const firebaseConfig = {
@@ -34,7 +35,6 @@ const firebaseConfig = {
 const firebaseApp = initializeApp(firebaseConfig);
 
 const provider = new GoogleAuthProvider();
-
 provider.setCustomParameters({
   prompt: "select_account",
 });
